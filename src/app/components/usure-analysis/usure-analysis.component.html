@@ -1,0 +1,88 @@
+<app-picture-popup></app-picture-popup>
+
+<h1 class="text-3xl font-bold mb-6">Formulaire d'Analyse d'Usure</h1>
+<form (submit)="this.onSubmit($event)" class="w-full max-w-lg mx-auto">
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full px-3 mb-6 md:mb-0">
+      <label
+        for="vehicle"
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        >Véhicule</label
+      >
+      <input
+        id="vehicle"
+        name="vehicle"
+        required
+        type="text"
+        placeholder="Nom du véhicule"
+        class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+      />
+    </div>
+  </div>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full px-3">
+      <label
+        for="rate"
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        >Taux d'usure</label
+      >
+      <div class="relative">
+        <select
+          id="rate"
+          name="rate"
+          class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        >
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+        >
+          <svg class="fill-current h-4 w-4" viewBox="0 0 20 20">
+            <path d="M10 12l-6-6 1.5-1.5L10 9.01 16.5 3.5 18 5z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-wrap -mx-3 mb-6">
+    <div class="w-full px-3">
+      <label
+        for="picture"
+        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+        >Prendre une photo</label
+      >
+      <button
+        (click)="sharedService.openPopup()"
+        type="button"
+        id="openModal"
+        class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Prendre une photo
+      </button>
+      <p *ngIf="this.sharedService.analysisImageUrl; else elseBlock">
+        Image was taken successfully
+      </p>
+      <ng-template #elseBlock>
+        <p>Please take a picture</p>
+      </ng-template>
+    </div>
+  </div>
+  <div class="flex justify-between">
+    <button
+      type="button"
+      (click)="sharedService.goBack()"
+      class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Retour
+    </button>
+    <button
+      type="submit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    >
+      Suivant
+    </button>
+  </div>
+</form>

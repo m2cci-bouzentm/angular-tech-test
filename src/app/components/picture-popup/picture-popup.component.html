@@ -1,0 +1,65 @@
+<div
+  id="cameraPopup"
+  class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden z-10"
+>
+  <div
+    class="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full p-5"
+  >
+    <h2 class="text-2xl font-bold mb-4">Prendre une photo</h2>
+
+    <!--__________________________________________________________________-->
+    <div
+      id="camera"
+      class="w-full h-[60%] bg-gray-50 flex items-center justify-center mb-4"
+    >
+      <!-- Camera preview  -->
+      <webcam
+        [trigger]="triggerObservable"
+        (imageCapture)="this.snapshot($event)"
+        *ngIf="sharedService.camPermission && this.imageUrl.length === 0"
+      ></webcam>
+      <img
+        *ngIf="this.imageUrl.length !== 0"
+        [src]="this.imageUrl"
+        alt="taken-picture"
+      />
+    </div>
+    <!--__________________________________________________________________-->
+
+    <div class="flex justify-between">
+      <button
+        *ngIf="this.imageUrl.length === 0"
+        (click)="this.takePicture()"
+        id="takePicture"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Capturer
+      </button>
+      <button
+        *ngIf="this.imageUrl.length !== 0"
+        (click)="this.tryAgain()"
+        id="tryAgain"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Essayer à nouveau
+      </button>
+      <button
+        *ngIf="this.imageUrl.length !== 0"
+        (click)="this.savePicture()"
+        id="savePicture"
+        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Sauvegarder
+      </button>
+
+      <button
+        *ngIf="this.imageUrl.length === 0"
+        (click)="this.closePopup()"
+        id="closePopup"
+        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<h1 class="text-3xl font-bold mb-6">Choisir le type d'analyse</h1>
+<div class="flex justify-center mb-6">
+  <a
+    routerLink="/usure"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <button
+      class="bg-blue-500 w-[135px] text-white py-3 px-6 rounded-lg mx-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+    >
+      Usure
+    </button>
+  </a>
+  <a
+    routerLink="/reference"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <button
+      class="bg-green-500 w-[135px] text-white py-3 px-6 rounded-lg mx-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+    >
+      Référence
+    </button>
+  </a>
+</div>
+<div class="w-full">
+  <h2 class="text-2xl font-semibold mb-4">Analyses déjà réalisées</h2>
+  <div
+    class="md:space-y-0 md:flex md:mx-0 space-y-4 mx-auto block items-start justify-evenly"
+  >
+    <!--____________________________________________________________________________________-->
+    <div class="p-4 md:w-[40%] bg-gray-50 border border-gray-200 rounded-lg">
+      <p class="text-lg py-4">
+        Analyse 1: Description de l'analyse d'usure déjà réalisée.
+      </p>
+      <div class="grid grid-cols-1 gap-4">
+        <div
+          ngIf="usureAnalysis.length !== 0"
+          *ngFor="let analysis of this.sharedService.usureAnalysis"
+          data-id="{{ analysis.id }}"
+          class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+        >
+          <img
+            [src]="analysis.imageUrl"
+            alt="{{ analysis.vehicle }}"
+            class="w-16 h-16 object-cover rounded-md mr-4"
+          />
+          <div>
+            <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
+            <p class="text-gray-500">Taux d'usure: {{ analysis.rate }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--____________________________________________________________________________________-->
+
+    <div class="p-4 md:w-[40%] bg-gray-50 border border-gray-200 rounded-lg">
+      <p class="text-lg py-4">
+        Analyse 2: Description de l'analyse de reference déjà réalisée.
+      </p>
+      <div class="grid grid-cols-1 gap-4">
+        <div
+          ngIf="referenceAnalysis.length !== 0"
+          *ngFor="let analysis of this.sharedService.referenceAnalysis"
+          data-id="{{ analysis.id }}"
+          class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+        >
+          <img
+            [src]="analysis.imageUrl"
+            alt="{{ analysis.vehicle }}"
+            class="w-16 h-16 object-cover rounded-md mr-4"
+          />
+          <div>
+            <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
+            <p class="text-gray-500">Dimension: {{ analysis.dimension }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--____________________________________________________________________________________-->
+  </div>
+</div>
