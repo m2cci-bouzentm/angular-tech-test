@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ReferenceService } from '../../services/reference.service';
-import { ReferenceAnalysis } from '../../../types';
+import { ReferenceAnalysis, TyreType } from '../../../types';
 import { PicturePopupComponent } from '../picture-popup/picture-popup.component';
 import { SharedService } from '../../services/shared.service';
 import { NgIf } from '@angular/common';
@@ -23,6 +23,10 @@ export class ReferenceAnalysisComponent {
   ) {
     this.sharedService = sharedService;
   }
+  FrontLeft = TyreType.FrontLeft;
+  FrontRight = TyreType.FrontRight;
+  RearLeft = TyreType.RearLeft;
+  RearRight = TyreType.RearRight;
 
   postReferenceAnalysis(referenceAnalysisObj: ReferenceAnalysis) {
     this.referenceService.post(referenceAnalysisObj).subscribe({
@@ -48,17 +52,19 @@ export class ReferenceAnalysisComponent {
 
   onSubmit(event: SubmitEvent) {
     event.preventDefault();
+
+    if (this.sharedService.analysisImagesUrl.length < 4) {
+      alert('Veuillez télécharger les 4 images');
+      return;
+    }
+
     const form = event.target as HTMLFormElement;
     const referenceAnalysisObj: ReferenceAnalysis = {
       id: this.generateReferenceId(),
-      imageUrl: this.sharedService.analysisImageUrl,
       vehicle: form['vehicle'].value,
       dimension: form['dimension'].value,
+      imagesUrl: this.sharedService.analysisImagesUrl,
     };
-
-    if (referenceAnalysisObj.imageUrl === '') {
-      return;
-    }
 
     console.log(referenceAnalysisObj);
     this.postReferenceAnalysis(referenceAnalysisObj);
@@ -67,5 +73,8 @@ export class ReferenceAnalysisComponent {
 
   ngOnInit() {
     this.sharedService.getReferenceAnalysis();
+  }
+  ngOnDestroy() {
+    this.sharedService.analysisImagesUrl = [];
   }
 }

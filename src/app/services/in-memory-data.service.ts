@@ -14,31 +14,56 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 1,
         vehicle: 'Car 1',
         rate: 'A',
-        imageUrl: 'assets/images/usure_image_sample.png',
+        imagesUrl: [
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+        ],
       },
       {
         id: 2,
         vehicle: 'Car 2',
         rate: 'B',
-        imageUrl: 'assets/images/usure_image_sample.png',
+        imagesUrl: [
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+        ],
       },
       {
         id: 3,
         vehicle: 'Car 3',
         rate: 'B',
-        imageUrl: 'assets/images/usure_image_sample.png',
+        imagesUrl: [
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+        ],
       },
       {
         id: 4,
         vehicle: 'Car 4',
         rate: 'B',
-        imageUrl: 'assets/images/usure_image_sample.png',
+        imagesUrl: [
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+        ],
       },
       {
         id: 5,
         vehicle: 'Car 5',
         rate: 'C',
-        imageUrl: 'assets/images/usure_image_sample.png',
+        imagesUrl: [
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+          'assets/images/usure_image_sample.png',
+        ],
       },
     ];
 
@@ -47,25 +72,45 @@ export class InMemoryDataService implements InMemoryDbService {
         id: 1,
         vehicle: 'Truck 1',
         dimension: 'Large',
-        imageUrl: 'assets/images/reference_image_sample.png',
+        imagesUrl: [
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+        ],
       },
       {
         id: 2,
         vehicle: 'Truck 2',
         dimension: 'Small',
-        imageUrl: 'assets/images/reference_image_sample.png',
+        imagesUrl: [
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+        ],
       },
       {
         id: 3,
         vehicle: 'Truck 2',
         dimension: 'Small',
-        imageUrl: 'assets/images/reference_image_sample.png',
+        imagesUrl: [
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+        ],
       },
       {
         id: 4,
         vehicle: 'Truck 2',
         dimension: 'Small',
-        imageUrl: 'assets/images/reference_image_sample.png',
+        imagesUrl: [
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+          'assets/images/reference_image_sample.png',
+        ],
       },
     ];
 

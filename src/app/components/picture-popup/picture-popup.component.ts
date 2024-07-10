@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { WebcamImage, WebcamModule } from 'ngx-webcam';
 import { SharedService } from '../../services/shared.service';
 import { NgIf } from '@angular/common';
@@ -20,7 +20,7 @@ export class PicturePopupComponent {
 
   trigger: Subject<void> = new Subject<void>();
 
-  imageUrl: string = '';
+  capturedImgUrl: string = '';
 
   get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
@@ -28,7 +28,7 @@ export class PicturePopupComponent {
 
   snapshot(event: WebcamImage) {
     console.log('Snapshot taken', event);
-    this.imageUrl = event.imageAsDataUrl;
+    this.capturedImgUrl = event.imageAsDataUrl;
   }
 
   closePopup() {
@@ -40,11 +40,13 @@ export class PicturePopupComponent {
   }
 
   savePicture() {
-    this.sharedService.analysisImageUrl = this.imageUrl;
-    this.closePopup();
+    const targetedTyre = this.sharedService.targetedTyre;
+    this.sharedService.analysisImagesUrl[targetedTyre] = this.capturedImgUrl;
+    document.getElementById('cameraPopup')?.classList.add('hidden');
+    this.capturedImgUrl = '';
   }
 
   tryAgain() {
-    this.imageUrl = '';
+    this.capturedImgUrl = '';
   }
 }

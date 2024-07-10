@@ -1,6 +1,6 @@
+<!-- id="cameraPopup" -->
 <div
-  id="cameraPopup"
-  class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden z-10"
+  class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-10"
 >
   <div
     class="bg-white rounded-lg overflow-hidden shadow-xl max-w-lg w-full p-5"
@@ -16,50 +16,50 @@
       <webcam
         [trigger]="triggerObservable"
         (imageCapture)="this.snapshot($event)"
-        *ngIf="sharedService.camPermission && this.imageUrl.length === 0"
+        *ngIf="sharedService.camPermission && this.capturedImgUrl.length === 0"
       ></webcam>
       <img
-        *ngIf="this.imageUrl.length !== 0"
-        [src]="this.imageUrl"
+        *ngIf="this.capturedImgUrl.length !== 0"
+        [src]="this.capturedImgUrl"
         alt="taken-picture"
       />
     </div>
     <!--__________________________________________________________________-->
 
     <div class="flex justify-between">
-      <button
-        *ngIf="this.imageUrl.length === 0"
-        (click)="this.takePicture()"
-        id="takePicture"
-        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Capturer
-      </button>
-      <button
-        *ngIf="this.imageUrl.length !== 0"
-        (click)="this.tryAgain()"
-        id="tryAgain"
-        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Essayer à nouveau
-      </button>
-      <button
-        *ngIf="this.imageUrl.length !== 0"
-        (click)="this.savePicture()"
-        id="savePicture"
-        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Sauvegarder
-      </button>
+      <ng-container *ngIf="this.capturedImgUrl.length === 0; else elseBlock">
+        <button
+          (click)="this.closePopup()"
+          id="closePopup"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Fermer
+        </button>
+        <button
+          (click)="this.takePicture()"
+          id="takePicture"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Capturer
+        </button>
+      </ng-container>
 
-      <button
-        *ngIf="this.imageUrl.length === 0"
-        (click)="this.closePopup()"
-        id="closePopup"
-        class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Fermer
-      </button>
+      <ng-template #elseBlock>
+        <button
+          (click)="this.tryAgain()"
+          id="tryAgain"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Essayer à nouveau
+        </button>
+        <button
+          (click)="this.savePicture()"
+          id="savePicture"
+          class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Sauvegarder
+        </button>
+      </ng-template>
     </div>
   </div>
 </div>

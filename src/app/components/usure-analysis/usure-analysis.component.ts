@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UsureService } from '../../services/usure.service';
-import { UsureAnalysis } from '../../../types';
+import { UsureAnalysis, TyreType } from '../../../types';
 import { PicturePopupComponent } from '../picture-popup/picture-popup.component';
 import { SharedService } from '../../services/shared.service';
 import { Router } from '@angular/router';
@@ -23,6 +23,11 @@ export class UsureAnalysisComponent {
   ) {
     this.sharedService = sharedService;
   }
+
+  FrontLeft = TyreType.FrontLeft;
+  FrontRight = TyreType.FrontRight;
+  RearLeft = TyreType.RearLeft;
+  RearRight = TyreType.RearRight;
 
   postUsureAnalysis(usureAnalysisObj: UsureAnalysis) {
     this.usureService.post(usureAnalysisObj).subscribe({
@@ -49,17 +54,19 @@ export class UsureAnalysisComponent {
 
   onSubmit(event: SubmitEvent) {
     event.preventDefault();
+
+    if (this.sharedService.analysisImagesUrl.length < 4) {
+      alert('Veuillez télécharger les 4 images');
+      return;
+    }
+
     const form = event.target as HTMLFormElement;
     const usureAnalysisObj: UsureAnalysis = {
       id: this.generateUsureAnalysisId(),
-      imageUrl: this.sharedService.analysisImageUrl,
       vehicle: form['vehicle'].value,
       rate: form['rate'].value,
+      imagesUrl: this.sharedService.analysisImagesUrl,
     };
-
-    if (usureAnalysisObj.imageUrl === '') {
-      return;
-    }
 
     console.log(usureAnalysisObj);
     this.postUsureAnalysis(usureAnalysisObj);
@@ -68,5 +75,8 @@ export class UsureAnalysisComponent {
 
   ngOnInit() {
     this.sharedService.getUsureAnalysis();
+  }
+  ngOnDestroy() {
+    this.sharedService.analysisImagesUrl = [];
   }
 }

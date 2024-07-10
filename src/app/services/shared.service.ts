@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UsureAnalysis, ReferenceAnalysis } from '../../types';
+import { UsureAnalysis, ReferenceAnalysis, TyreType } from '../../types';
 import { UsureService } from './usure.service';
 import { ReferenceService } from './reference.service';
 
@@ -16,13 +16,19 @@ export class SharedService {
   referenceAnalysis: ReferenceAnalysis[] = [];
 
   camPermission: boolean = false;
-  analysisImageUrl: string = '';
+
+  targetedTyre!: TyreType;
+  analysisImagesUrl: string[] = [];
 
   getUsureAnalysis() {
     this.usureService.get().subscribe({
       next: (data: UsureAnalysis[]) => {
         console.log(data);
         this.usureAnalysis = data;
+        localStorage.setItem(
+          'usureAnalysis',
+          JSON.stringify(this.usureAnalysis)
+        );
       },
       error: (error) => {
         console.log(error);
@@ -35,6 +41,10 @@ export class SharedService {
       next: (data: ReferenceAnalysis[]) => {
         console.log(data);
         this.referenceAnalysis = data;
+        localStorage.setItem(
+          'referenceAnalysis',
+          JSON.stringify(this.referenceAnalysis)
+        );
       },
       error: (error) => {
         console.log(error);
@@ -59,8 +69,9 @@ export class SharedService {
       });
   }
 
-  openPopup() {
-    document.getElementById('cameraPopup')?.classList.remove('hidden');
+  openPopup(tyreType: TyreType) {
     this.getCamPermission();
+    this.targetedTyre = tyreType;
+    document.getElementById('cameraPopup')?.classList.remove('hidden');
   }
 }

@@ -1,21 +1,13 @@
 <h1 class="text-3xl font-bold mb-6">Choisir le type d'analyse</h1>
 <div class="flex justify-center mb-6">
-  <a
-    routerLink="/usure"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
+  <a routerLink="/usure">
     <button
       class="bg-blue-500 w-[135px] text-white py-3 px-6 rounded-lg mx-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
     >
       Usure
     </button>
   </a>
-  <a
-    routerLink="/reference"
-    routerLinkActive="active"
-    [routerLinkActiveOptions]="{ exact: true }"
-  >
+  <a routerLink="/reference">
     <button
       class="bg-green-500 w-[135px] text-white py-3 px-6 rounded-lg mx-2 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
     >
@@ -34,22 +26,37 @@
         Analyse 1: Description de l'analyse d'usure déjà réalisée.
       </p>
       <div class="grid grid-cols-1 gap-4">
-        <div
-          ngIf="usureAnalysis.length !== 0"
-          *ngFor="let analysis of this.sharedService.usureAnalysis"
-          data-id="{{ analysis.id }}"
-          class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+        <ng-container
+          *ngIf="this.sharedService.usureAnalysis.length === 0; else elseblock"
         >
           <img
-            [src]="analysis.imageUrl"
-            alt="{{ analysis.vehicle }}"
-            class="w-16 h-16 object-cover rounded-md mr-4"
+            src="assets/images/loading-image.svg"
+            alt="loading-image"
+            class="mx-auto"
           />
-          <div>
-            <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
-            <p class="text-gray-500">Taux d'usure: {{ analysis.rate }}</p>
+        </ng-container>
+
+        <ng-template #elseblock>
+          <div
+            *ngFor="let analysis of this.sharedService.usureAnalysis"
+            data-id="{{ analysis.id }}"
+            class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer transition-all hover:scale-105"
+            routerLink="/usure/{{ analysis.id }}"
+          >
+            <div class="grid grid-cols-2 gap-1">
+              <img
+                *ngFor="let imageUrl of analysis.imagesUrl"
+                [src]="imageUrl"
+                alt="{{ analysis.vehicle }}"
+                class="w-12 h-12 object-cover rounded-md mr-4"
+              />
+            </div>
+            <div>
+              <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
+              <p class="text-gray-500">Taux d'usure: {{ analysis.rate }}</p>
+            </div>
           </div>
-        </div>
+        </ng-template>
       </div>
     </div>
 
@@ -60,22 +67,39 @@
         Analyse 2: Description de l'analyse de reference déjà réalisée.
       </p>
       <div class="grid grid-cols-1 gap-4">
-        <div
-          ngIf="referenceAnalysis.length !== 0"
-          *ngFor="let analysis of this.sharedService.referenceAnalysis"
-          data-id="{{ analysis.id }}"
-          class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm"
+        <ng-container
+          *ngIf="
+            this.sharedService.referenceAnalysis.length === 0;
+            else elseblock2
+          "
         >
           <img
-            [src]="analysis.imageUrl"
-            alt="{{ analysis.vehicle }}"
-            class="w-16 h-16 object-cover rounded-md mr-4"
+            src="assets/images/loading-image.svg"
+            alt="loading-image"
+            class="mx-auto"
           />
-          <div>
-            <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
-            <p class="text-gray-500">Dimension: {{ analysis.dimension }}</p>
+        </ng-container>
+        <ng-template #elseblock2>
+          <div
+            *ngFor="let analysis of this.sharedService.referenceAnalysis"
+            routerLink="/reference/{{ analysis.id }}"
+            data-id="{{ analysis.id }}"
+            class="flex items-center p-4 bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer transition-all hover:scale-105"
+          >
+            <div class="grid grid-cols-2 gap-1">
+              <img
+                *ngFor="let imageUrl of analysis.imagesUrl"
+                [src]="imageUrl"
+                alt="{{ analysis.vehicle }}"
+                class="w-12 h-12 object-cover rounded-md mr-4"
+              />
+            </div>
+            <div>
+              <p class="text-lg font-semibold">{{ analysis.vehicle }}</p>
+              <p class="text-gray-500">Dimension: {{ analysis.dimension }}</p>
+            </div>
           </div>
-        </div>
+        </ng-template>
       </div>
     </div>
 

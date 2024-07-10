@@ -1,0 +1,37 @@
+<div class="max-w-2xl mx-auto my-8">
+  <div class="bg-white shadow-md rounded-lg p-6">
+    <h2 class="text-2xl font-bold mb-4">{{ referenceAnalysis.vehicle }}</h2>
+    <p><strong>Dimension:</strong> {{ referenceAnalysis.dimension }}</p>
+    <div
+      *ngIf="
+        referenceAnalysis.imagesUrl && referenceAnalysis.imagesUrl.length > 0
+      "
+      class="grid grid-cols-2 gap-4 mt-4"
+    >
+      <div *ngFor="let imageUrl of referenceAnalysis.imagesUrl; let i = index">
+        <div class="flex flex-col items-center justify-center">
+          <img
+            [src]="imageUrl"
+            alt="Image de Référence"
+            class="rounded-lg mr-4 w-[250px]"
+          />
+          <span class="block"> {{ getReferenceImageLabel(i) }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        !referenceAnalysis.imagesUrl || referenceAnalysis.imagesUrl.length === 0
+      "
+      class="text-gray-500 mt-2"
+    >
+      Aucune image disponible
+    </div>
+    <button
+      class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
+      (click)="goBack()"
+    >
+      Retour
+    </button>
+  </div>
+</div>
